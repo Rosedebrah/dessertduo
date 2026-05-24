@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dessert Duo — Cookies & Cupcakes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink:       #F472B6;
+  --pink-dark:  #C4537A;
+  --pink-light: #FDE8EE;
+  --pink-pale:  #FFF0F6;
+  --brown:      #7B3F00;
+  --cream:      #FEFAF5;
+  --gold:       #F5C842;
+  --purple:     #C084FC;
+  --orange:     #FB923C;
+  --green:      #4ADE80;
+  --text:       #3D1A1A;
+  --muted:      #9B6B6B;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ── custom cursor ── */
+* { cursor: none !important; }
+#cursor {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--pink);
+  position: fixed; top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease, background 0.2s;
+  mix-blend-mode: multiply;
+}
+#cursor.big { transform: scale(2.5); background: var(--gold); }
+
+/* ── noise texture overlay ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2.5rem;
+  background: rgba(255,240,246,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--pink-light);
+}
+
+.nav-logo {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.6rem;
+  color: var(--pink);
+  text-decoration: none;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.nav-logo span { font-size: 1.3rem; }
+
+.nav-links {
+  display: flex; gap: 2rem; list-style: none;
+}
+.nav-links a {
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--brown);
+  position: relative;
+  padding-bottom: 2px;
+  transition: color 0.2s;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute; bottom: -2px; left: 0; right: 0;
+  height: 2px; background: var(--pink);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.25s ease;
+}
+.nav-links a:hover { color: var(--pink); }
+.nav-links a:hover::after { transform: scaleX(1); }
+
+.nav-order {
+  background: var(--pink);
+  color: white;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.55rem 1.4rem;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: transform 0.2s, background 0.2s;
+  box-shadow: 0 4px 14px rgba(244,114,182,0.4);
+}
+.nav-order:hover { transform: translateY(-2px) scale(1.03); background: var(--pink-dark); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 8rem 2rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* floating blobs */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(60px); opacity: 0.35; animation: drift 8s ease-in-out infinite;
+}
+.blob-1 { width: 400px; height: 400px; background: var(--pink); top: -100px; left: -100px; animation-delay: 0s; }
+.blob-2 { width: 300px; height: 300px; background: var(--purple); bottom: 50px; right: -80px; animation-delay: -3s; }
+.blob-3 { width: 250px; height: 250px; background: var(--gold); top: 40%; left: 60%; animation-delay: -5s; }
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -20px) scale(1.05); }
+  66%       { transform: translate(-20px, 30px) scale(0.95); }
+}
+
+/* floating emoji */
+.floater {
+  position: absolute; font-size: 2.2rem;
+  animation: float 6s ease-in-out infinite;
+  pointer-events: none; user-select: none;
+}
+.floater:nth-child(1)  { top: 15%; left: 8%;  animation-delay: 0s; }
+.floater:nth-child(2)  { top: 20%; right: 10%; animation-delay: -2s; }
+.floater:nth-child(3)  { bottom: 25%; left: 5%; animation-delay: -4s; }
+.floater:nth-child(4)  { bottom: 20%; right: 8%; animation-delay: -1s; }
+.floater:nth-child(5)  { top: 50%; left: 3%;  animation-delay: -3s; font-size: 1.6rem; }
+.floater:nth-child(6)  { top: 45%; right: 3%; animation-delay: -5s; font-size: 1.6rem; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%       { transform: translateY(-18px) rotate(8deg); }
+}
+
+.hero-badge {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--brown);
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.4rem 1.2rem;
+  border-radius: 100px;
+  margin-bottom: 1.5rem;
+  animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
+}
+
+.hero-title {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  color: var(--pink);
+  line-height: 1.05;
+  margin-bottom: 0.5rem;
+  animation: popIn 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.3s both;
+  text-shadow: 4px 4px 0 rgba(196,83,122,0.15);
+}
+
+.hero-sub {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  color: var(--brown);
+  margin-bottom: 1.5rem;
+  animation: popIn 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.45s both;
+}
+
+.hero-desc {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 480px;
+  margin: 0 auto 2.5rem;
+  font-weight: 600;
+  line-height: 1.7;
+  animation: fadeUp 0.7s ease 0.6s both;
+}
+
+.hero-btns {
+  display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+  animation: fadeUp 0.7s ease 0.75s both;
+}
+
+.btn-primary {
+  background: var(--pink);
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800; font-size: 1rem;
+  padding: 0.85rem 2rem;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 6px 20px rgba(244,114,182,0.45);
+}
+.btn-primary:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 10px 28px rgba(244,114,182,0.5); }
+
+.btn-secondary {
+  background: white;
+  color: var(--pink-dark);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800; font-size: 1rem;
+  padding: 0.85rem 2rem;
+  border-radius: 100px;
+  text-decoration: none;
+  border: 2.5px solid var(--pink);
+  transition: transform 0.2s, background 0.2s;
+}
+.btn-secondary:hover { transform: translateY(-3px) scale(1.04); background: var(--pink-light); }
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.8) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* scroll indicator */
+.scroll-hint {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  font-size: 0.75rem; font-weight: 700; color: var(--muted); letter-spacing: 0.1em;
+  text-transform: uppercase; animation: fadeUp 1s ease 1.2s both;
+}
+.scroll-arrow {
+  width: 24px; height: 24px;
+  border-right: 3px solid var(--pink); border-bottom: 3px solid var(--pink);
+  transform: rotate(45deg);
+  animation: bounce 1.5s ease-in-out infinite;
+}
+@keyframes bounce { 0%,100%{transform:rotate(45deg) translateY(0)} 50%{transform:rotate(45deg) translateY(6px)} }
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  background: var(--pink);
+  padding: 0.9rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border-top: 3px solid var(--pink-dark);
+  border-bottom: 3px solid var(--pink-dark);
+}
+.marquee-inner {
+  display: inline-flex; gap: 0;
+  animation: marquee 20s linear infinite;
+}
+.marquee-inner span {
+  font-family: 'Pacifico', cursive;
+  font-size: 1rem; color: white;
+  padding: 0 2rem;
+  letter-spacing: 0.05em;
+}
+.marquee-inner .dot { color: var(--gold); }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── SECTIONS SHARED ── */
+section { padding: 6rem 2rem; }
+.section-tag {
+  display: inline-block;
+  font-weight: 800; font-size: 0.8rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--pink-dark); background: var(--pink-light);
+  padding: 0.35rem 1rem; border-radius: 100px;
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--brown);
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+.section-desc {
+  color: var(--muted); font-size: 1.05rem; font-weight: 600;
+  max-width: 520px; line-height: 1.7; margin-bottom: 3rem;
+}
+
+/* ── WHY US ── */
+.why { background: var(--pink-pale); }
+.why-inner { max-width: 1100px; margin: 0 auto; }
+.why-inner .section-desc { margin-left: auto; margin-right: auto; text-align: center; }
+.why-inner > * { text-align: center; }
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem; margin-top: 3rem;
+}
+.why-card {
+  background: white;
+  border-radius: 24px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  border: 2px solid var(--pink-light);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative; overflow: hidden;
+}
+.why-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--pink-light) 0%, transparent 60%);
+  opacity: 0; transition: opacity 0.3s;
+}
+.why-card:hover { transform: translateY(-8px) rotate(-1deg); box-shadow: 0 16px 40px rgba(244,114,182,0.2); }
+.why-card:hover::before { opacity: 1; }
+.why-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+.why-card h3 { font-size: 1.1rem; font-weight: 800; color: var(--brown); margin-bottom: 0.5rem; }
+.why-card p  { font-size: 0.9rem; color: var(--muted); font-weight: 600; line-height: 1.6; }
+
+/* ── MENU ── */
+#menu { max-width: 1200px; margin: 0 auto; }
+.menu-header { margin-bottom: 3rem; }
+
+.menu-tabs {
+  display: flex; gap: 0.75rem; margin-bottom: 2.5rem; flex-wrap: wrap;
+}
+.tab {
+  background: white; border: 2.5px solid var(--pink-light);
+  color: var(--brown); font-family: 'Nunito', sans-serif;
+  font-weight: 800; font-size: 0.95rem;
+  padding: 0.6rem 1.5rem; border-radius: 100px;
+  cursor: none; transition: all 0.2s;
+}
+.tab.active, .tab:hover {
+  background: var(--pink); color: white; border-color: var(--pink);
+  transform: translateY(-2px);
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+.menu-grid.hidden { display: none; }
+
+.menu-card {
+  background: white;
+  border-radius: 24px;
+  border: 2px solid var(--pink-light);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+.menu-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 16px 40px rgba(244,114,182,0.18); }
+
+.menu-card-emoji {
+  background: var(--pink-light);
+  padding: 2.5rem 1rem;
+  text-align: center;
+  font-size: 4rem;
+  position: relative; overflow: hidden;
+}
+.menu-card-emoji::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 20px;
+  background: white;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.menu-card-body { padding: 1.25rem 1.5rem 1.5rem; }
+.menu-card-name { font-size: 1.1rem; font-weight: 800; color: var(--brown); margin-bottom: 0.25rem; }
+.menu-card-desc { font-size: 0.85rem; color: var(--muted); font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+.menu-card-footer { display: flex; justify-content: space-between; align-items: center; }
+.menu-price {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.4rem; color: var(--pink-dark);
+}
+.menu-tag {
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.08em; padding: 0.3rem 0.8rem; border-radius: 100px;
+}
+.tag-pink   { background: var(--pink-light); color: var(--pink-dark); }
+.tag-purple { background: #F3E8FF; color: #7C3AED; }
+.tag-gold   { background: #FEF9C3; color: #92400E; }
+
+/* Toppings special card */
+.toppings-section { margin-top: 2rem; }
+.toppings-title { font-weight: 800; color: var(--brown); font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+.toppings-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.topping-pill {
+  background: var(--pink-light);
+  border: 2px solid var(--pink);
+  border-radius: 100px;
+  padding: 0.5rem 1.2rem;
+  font-weight: 700; font-size: 0.9rem;
+  color: var(--pink-dark);
+  display: flex; align-items: center; gap: 0.4rem;
+  transition: transform 0.2s, background 0.2s;
+}
+.topping-pill:hover { transform: scale(1.05); background: var(--pink); color: white; }
+.topping-price {
+  font-family: 'Pacifico', cursive;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+/* ── HOW TO ORDER ── */
+.order-section { background: var(--pink-pale); }
+.order-inner { max-width: 900px; margin: 0 auto; }
+.order-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+.step {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  position: relative;
+}
+.step-number {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--pink); color: white;
+  font-family: 'Pacifico', cursive; font-size: 1.6rem;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1rem;
+  box-shadow: 0 6px 20px rgba(244,114,182,0.4);
+  position: relative; z-index: 1;
+}
+.step h3 { font-size: 1rem; font-weight: 800; color: var(--brown); margin-bottom: 0.5rem; }
+.step p  { font-size: 0.9rem; color: var(--muted); font-weight: 600; line-height: 1.5; }
+
+/* connector lines */
+.order-steps { position: relative; }
+.order-steps::before {
+  content: '';
+  position: absolute; top: 32px; left: 15%; right: 15%;
+  height: 3px;
+  background: repeating-linear-gradient(90deg, var(--pink) 0, var(--pink) 10px, transparent 10px, transparent 20px);
+  z-index: 0;
+}
+
+/* ── CONTACT ── */
+.contact-section { text-align: center; }
+.contact-inner { max-width: 700px; margin: 0 auto; }
+.contact-inner .section-desc { margin: 0 auto 2.5rem; }
+
+.contact-cards {
+  display: flex; flex-wrap: wrap; gap: 1.25rem; justify-content: center;
+  margin-bottom: 3rem;
+}
+.contact-card {
+  background: white; border: 2px solid var(--pink-light);
+  border-radius: 20px; padding: 1.5rem 2rem;
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none; color: inherit; min-width: 160px;
+}
+.contact-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(244,114,182,0.15); }
+.contact-icon { font-size: 2rem; }
+.contact-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+.contact-value { font-weight: 700; color: var(--brown); font-size: 0.9rem; }
+
+.cta-box {
+  background: linear-gradient(135deg, var(--pink) 0%, var(--pink-dark) 100%);
+  border-radius: 28px;
+  padding: 3rem 2rem;
+  color: white;
+  position: relative; overflow: hidden;
+}
+.cta-box::before {
+  content: '🍪';
+  position: absolute; font-size: 8rem; opacity: 0.08;
+  right: -1rem; bottom: -2rem; line-height: 1;
+}
+.cta-box h2 { font-family: 'Pacifico', cursive; font-size: 2rem; margin-bottom: 0.75rem; }
+.cta-box p  { opacity: 0.9; font-size: 1rem; font-weight: 600; margin-bottom: 1.5rem; }
+.cta-box .btn-white {
+  display: inline-block;
+  background: white; color: var(--pink-dark);
+  font-family: 'Nunito', sans-serif; font-weight: 800;
+  padding: 0.85rem 2.5rem; border-radius: 100px;
+  text-decoration: none; font-size: 1rem;
+  transition: transform 0.2s;
+}
+.cta-box .btn-white:hover { transform: scale(1.05); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--brown); color: white;
+  text-align: center; padding: 2.5rem 2rem;
+}
+footer .logo { font-family: 'Pacifico', cursive; font-size: 1.8rem; color: var(--pink); margin-bottom: 0.5rem; }
+footer p { font-size: 0.85rem; opacity: 0.6; font-weight: 600; }
+footer .socials { display: flex; gap: 1.5rem; justify-content: center; margin: 1rem 0; }
+footer .socials a { color: var(--pink-light); font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: color 0.2s; }
+footer .socials a:hover { color: var(--gold); }
+
+/* ── reveal on scroll ── */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── responsive ── */
+@media (max-width: 700px) {
+  nav { padding: 1rem 1.25rem; }
+  .nav-links { display: none; }
+  .hero-title { font-size: clamp(3rem, 15vw, 5rem); }
+  .order-steps::before { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">🍪 Dessert Duo</a>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#order">How to Order</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/254111550163" target="_blank" class="nav-order">Order Now ✨</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <span class="floater">🍪</span>
+  <span class="floater">🧁</span>
+  <span class="floater">✨</span>
+  <span class="floater">🍫</span>
+  <span class="floater">🌈</span>
+  <span class="floater">🎀</span>
+
+  <span class="hero-badge">🎉 Nairobi's Sweetest Duo</span>
+  <h1 class="hero-title">Dessert<br>Duo</h1>
+  <p class="hero-sub">Cookies & Cupcakes</p>
+  <p class="hero-desc">Handmade with love in Nairobi. Freshly baked cookies and frosted cupcakes delivered to your door — min. 4 cookies · min. 6 cupcakes.</p>
+  <div class="hero-btns">
+    <a href="#menu" class="btn-primary">Explore Our Menu 🍪</a>
+    <a href="https://wa.me/254111550163" target="_blank" class="btn-secondary">Order on WhatsApp</a>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span>🍪 Chocolate Chip</span><span class="dot">✦</span>
+    <span>🧁 Red Velvet</span><span class="dot">✦</span>
+    <span>🍋 Lemon</span><span class="dot">✦</span>
+    <span>🍫 Double Chocolate</span><span class="dot">✦</span>
+    <span>🌰 Nutella</span><span class="dot">✦</span>
+    <span>🍬 Marshmallow</span><span class="dot">✦</span>
+    <span>☕ Biscoff</span><span class="dot">✦</span>
+    <span>🍦 Vanilla</span><span class="dot">✦</span>
+    <span>🍁 Caramel</span><span class="dot">✦</span>
+    <span>🌿 Cinnamon Swirl</span><span class="dot">✦</span>
+    <!-- repeat for seamless loop -->
+    <span>🍪 Chocolate Chip</span><span class="dot">✦</span>
+    <span>🧁 Red Velvet</span><span class="dot">✦</span>
+    <span>🍋 Lemon</span><span class="dot">✦</span>
+    <span>🍫 Double Chocolate</span><span class="dot">✦</span>
+    <span>🌰 Nutella</span><span class="dot">✦</span>
+    <span>🍬 Marshmallow</span><span class="dot">✦</span>
+    <span>☕ Biscoff</span><span class="dot">✦</span>
+    <span>🍦 Vanilla</span><span class="dot">✦</span>
+    <span>🍁 Caramel</span><span class="dot">✦</span>
+    <span>🌿 Cinnamon Swirl</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- WHY US -->
+<section class="why reveal">
+  <div class="why-inner">
+    <span class="section-tag">Why Dessert Duo?</span>
+    <h2 class="section-title">Baked with love, every time 💕</h2>
+    <p class="section-desc">We're a small home bakery based in Nairobi, making every batch fresh to order — no preservatives, no shortcuts.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <span class="why-icon">👩‍🍳</span>
+        <h3>Freshly Baked</h3>
+        <p>Every order is baked fresh on the day. You'll always get cookies and cupcakes at their absolute best.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🎨</span>
+        <h3>7 Cookie Flavours</h3>
+        <p>From classic chocolate chip to gooey Nutella and dreamy marshmallow — there's something for everyone.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🧁</span>
+        <h3>9 Cupcake Flavours</h3>
+        <p>Beautifully frosted cupcakes in seasonal and classic flavours, with custom toppings available.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🎁</span>
+        <h3>Perfect for Gifting</h3>
+        <p>Beautifully packaged 6-packs and 12-packs, great for birthdays, events, or just treating yourself.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div id="menu" style="max-width:1200px;margin:0 auto;">
+    <span class="section-tag">Our Menu</span>
+    <h2 class="section-title">Pick your favourites 🍪🧁</h2>
+    <p class="section-desc">Tap a category to browse. All items made fresh to order.</p>
+
+    <div class="menu-tabs">
+      <button class="tab active" onclick="showTab('cookies', this)">🍪 Cookies</button>
+      <button class="tab" onclick="showTab('cupcakes', this)">🧁 Cupcakes</button>
+      <button class="tab" onclick="showTab('toppings', this)">✨ Toppings</button>
+    </div>
+
+    <!-- COOKIES -->
+    <div id="tab-cookies" class="menu-grid">
+      <div class="menu-card">
+        <div class="menu-card-emoji">🔴</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Red Velvet</div>
+          <div class="menu-card-desc">Rich red velvet flavour packed into a thick, chewy cookie. A showstopper.</div>
+          <div class="menu-card-footer">
+            <div class="menu-price">sh 80</div>
+            <span class="menu-tag tag-pink">Min 4</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-emoji">🍫</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Chocolate Chip</div>
+          <div class="menu-card-desc">The classic. Loaded with chocolate chips and baked to golden perfection.</div>
+          <div class="menu-card-footer">
+            <div class="menu-price">sh 80</div>
+            <span class="menu-tag tag-pink">Min 4</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-emoji">🍫🍫</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Double Chocolate</div>
+          <div class="menu-card-desc">Chocolate dough + chocolate chips. For the serious chocoholic in your life.</div>
+          <div class="menu-card-footer">
+            <div class="menu-price">sh 80</div>
+            <span class="menu-tag tag-pink">Min 4</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-emoji">🍋</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Lemon</div>
+          <div class="menu-card-desc">Bright, zesty, and refreshing. A lighter option that punches with citrus.</div>
+          <div class="menu-card-footer">
+            <div class="menu-price">sh 80</div>
+            <span class="menu-tag tag-pink">Min 4</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-emoji">☕</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Biscoff</div>
+          <div class="menu-card-desc">Caramelised, spiced, irresistible. The cookie for Biscoff lovers.</div>
+          <div class="menu-card-footer">
+            <div class="menu-price">sh 100</div>
+            <span class="menu-tag tag-gold">Premium</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-emoji">🌰</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Nutella</div>
+          <div class="menu-card-desc">Hazelnut chocolate swirled into every bite. Dangerously good.</div>
+          <div class="menu-card-footer">
+            <div class="menu-price">sh 100</div>
+            <span class="menu-tag tag-gold">Premium</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-emoji">🍬</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Marshmallow</div>
+          <div class="menu-card-desc">Soft, gooey marshmallows baked right in. Pure childhood joy.</div>
+          <div class="menu-card-footer">
+            <div class="menu-price">sh 100</div>
+            <span class="menu-tag tag-gold">Premium</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUPCAKES -->
+    <div id="tab-cupcakes" class="menu-grid hidden">
+      <div class="menu-card">
+        <div class="menu-card-emoji">🍦</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Vanilla</div>
+          <div class="menu-card-desc">Classic vanilla sponge with silky buttercream frosting.</div>
+          <div class="menu-card-footer"><div class="menu-price">sh 70</div><span class="menu-tag tag-pink">Min 6</span></div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-emoji">🍫</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Chocolate</div>
+          <div class="menu-card-desc">Rich chocolate sponge topped with creamy chocolate frosting.</div>
+          <div class="menu-card-footer"><div class="menu-price">sh 70</div><span class="menu-tag tag-pink">Min 6</span></div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-emoji">🍫✨</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Chocolate Chip</div>
+          <div class="menu-card-desc">Studded with chocolate chips inside and out — doubly delightful.</div>
+          <div class="menu-card-footer"><div class="menu-price">sh 70</div><span class="menu-tag tag-pink">Min 6</span></div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-emoji">🍋</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Lemon</div>
+          <div class="menu-card-desc">Tangy lemon sponge with a lemon buttercream that sings.</div>
+          <div class="menu-card-footer"><div class="menu-price">sh 70</div><span class="menu-tag tag-pink">Min 6</span></div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-emoji">🔴🧁</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Red Velvet</div>
+          <div class="menu-card-desc">Iconic red velvet sponge with fluffy cream cheese-style frosting.</div>
+          <div class="menu-card-footer"><div class="menu-price">sh 70</div><span class="menu-tag tag-pink">Min 6</span></div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-emoji">🌿</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Cinnamon Swirl</div>
+          <div class="menu-card-desc">Warm cinnamon-spiced sponge with swirled vanilla frosting.</div>
+          <div class="menu-card-footer"><div class="menu-price">sh 70</div><span class="menu-tag tag-pink">Min 6</span></div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-emoji">🍁</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Caramel</div>
+          <div class="menu-card-desc">Buttery caramel sponge with a caramel drizzle on top.</div>
+          <div class="menu-card-footer"><div class="menu-price">sh 70</div><span class="menu-tag tag-pink">Min 6</span></div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-emoji">☕</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Biscoff</div>
+          <div class="menu-card-desc">Spiced Biscoff sponge with Biscoff buttercream. A fan favourite.</div>
+          <div class="menu-card-footer"><div class="menu-price">sh 70</div><span class="menu-tag tag-pink">Min 6</span></div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-emoji">🤍</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Plain (No Frosting)</div>
+          <div class="menu-card-desc">A clean, simple vanilla sponge — great for those who like it light.</div>
+          <div class="menu-card-footer"><div class="menu-price">sh 50</div><span class="menu-tag tag-purple">No Frost</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOPPINGS -->
+    <div id="tab-toppings" class="menu-grid hidden" style="display:none;">
+      <div style="grid-column: 1/-1;">
+        <div style="background:white;border-radius:24px;border:2px solid var(--pink-light);padding:2rem;">
+          <p style="font-size:1rem;color:var(--muted);font-weight:600;margin-bottom:1.5rem;line-height:1.7;">Add any topping to your cupcakes for just <strong style="color:var(--pink-dark)">sh 30 each</strong>. Mix and match to make your box extra special!</p>
+          <div class="toppings-grid">
+            <div class="topping-pill">🌈 Rainbow Sprinkles <span class="topping-price">+30</span></div>
+            <div class="topping-pill">🥜 Nuts & Fruits <span class="topping-price">+30</span></div>
+            <div class="topping-pill">🍫 Choc Chips/Chunks <span class="topping-price">+30</span></div>
+            <div class="topping-pill">🍬 Marshmallows <span class="topping-price">+30</span></div>
+            <div class="topping-pill">☕ Biscuits <span class="topping-price">+30</span></div>
+          </div>
+        </div>
+
+        <!-- Packaging -->
+        <div style="margin-top:1.5rem;background:var(--pink-light);border-radius:24px;padding:2rem;">
+          <h3 style="font-weight:800;color:var(--brown);margin-bottom:1rem;">📦 Packaging Options</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
+            <div style="background:white;border-radius:16px;padding:1.25rem;text-align:center;">
+              <div style="font-size:2.5rem;margin-bottom:0.5rem;">🍪</div>
+              <div style="font-weight:800;color:var(--brown);">Cookie 4-Pack</div>
+              <div style="font-family:'Pacifico',cursive;color:var(--pink-dark);font-size:1.3rem;">sh 500</div>
+              <div style="font-size:0.8rem;color:var(--muted);font-weight:600;">minimum order</div>
+            </div>
+            <div style="background:white;border-radius:16px;padding:1.25rem;text-align:center;">
+              <div style="font-size:2.5rem;margin-bottom:0.5rem;">🧁</div>
+              <div style="font-weight:800;color:var(--brown);">Cupcake 6-Pack</div>
+              <div style="font-family:'Pacifico',cursive;color:var(--pink-dark);font-size:1.3rem;">sh 600</div>
+              <div style="font-size:0.8rem;color:var(--muted);font-weight:600;">plain frosted</div>
+            </div>
+            <div style="background:white;border-radius:16px;padding:1.25rem;text-align:center;">
+              <div style="font-size:2.5rem;margin-bottom:0.5rem;">🧁🧁</div>
+              <div style="font-weight:800;color:var(--brown);">Cupcake 12-Pack</div>
+              <div style="font-family:'Pacifico',cursive;color:var(--pink-dark);font-size:1.3rem;">sh 1,200</div>
+              <div style="font-size:0.8rem;color:var(--muted);font-weight:600;">plain frosted</div>
+            </div>
+            <div style="background:white;border-radius:16px;padding:1.25rem;text-align:center;">
+              <div style="font-size:2.5rem;margin-bottom:0.5rem;">✨🧁</div>
+              <div style="font-weight:800;color:var(--brown);">6-Pack + Toppings</div>
+              <div style="font-family:'Pacifico',cursive;color:var(--pink-dark);font-size:1.3rem;">sh 900</div>
+              <div style="font-size:0.8rem;color:var(--muted);font-weight:600;">with toppings</div>
+            </div>
+            <div style="background:white;border-radius:16px;padding:1.25rem;text-align:center;">
+              <div style="font-size:2.5rem;margin-bottom:0.5rem;">✨🧁🧁</div>
+              <div style="font-weight:800;color:var(--brown);">12-Pack + Toppings</div>
+              <div style="font-family:'Pacifico',cursive;color:var(--pink-dark);font-size:1.3rem;">sh 1,800</div>
+              <div style="font-size:0.8rem;color:var(--muted);font-weight:600;">with toppings</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO ORDER -->
+<section id="order" class="order-section reveal">
+  <div class="order-inner">
+    <span class="section-tag">Ordering is Easy</span>
+    <h2 class="section-title">How to get your treats 🎀</h2>
+    <div class="order-steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Browse the Menu</h3>
+        <p>Choose your cookie or cupcake flavours, pick a pack size, and select your toppings.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Contact Us</h3>
+        <p>DM us on Instagram or TikTok, or send us a WhatsApp. We'll confirm your order!</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>We Bake Fresh</h3>
+        <p>Your order goes straight into the oven. Made fresh, never from stock.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <h3>Enjoy! 🎉</h3>
+        <p>Collect or get it delivered. Open the box and dig in — you deserve it!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section reveal">
+  <div class="contact-inner">
+    <span class="section-tag">Find Us</span>
+    <h2 class="section-title">Let's get in touch 💬</h2>
+    <p class="section-desc">We're always happy to chat about orders, custom requests, or just say hi!</p>
+
+    <div class="contact-cards">
+      <a href="https://wa.me/254111550163" target="_blank" class="contact-card">
+        <span class="contact-icon">📱</span>
+        <span class="contact-label">WhatsApp</span>
+        <span class="contact-value">+254 111 550163</span>
+      </a>
+      <a href="https://wa.me/254795215868" target="_blank" class="contact-card">
+        <span class="contact-icon">📱</span>
+        <span class="contact-label">WhatsApp</span>
+        <span class="contact-value">+254 795 215868</span>
+      </a>
+      <a href="https://instagram.com/thedessertduo.ke" target="_blank" class="contact-card">
+        <span class="contact-icon">📸</span>
+        <span class="contact-label">Instagram</span>
+        <span class="contact-value">@thedessertduo.ke</span>
+      </a>
+      <a href="https://tiktok.com/@dessert.duo" target="_blank" class="contact-card">
+        <span class="contact-icon">🎵</span>
+        <span class="contact-label">TikTok</span>
+        <span class="contact-value">@dessert.duo</span>
+      </a>
+      <a href="mailto:thedessertduoke@gmail.com" class="contact-card">
+        <span class="contact-icon">✉️</span>
+        <span class="contact-label">Email</span>
+        <span class="contact-value">thedessertduoke@gmail.com</span>
+      </a>
+    </div>
+
+    <div class="cta-box">
+      <h2>Ready to order? 🍪</h2>
+      <p>Send us a WhatsApp message and we'll sort out your freshly baked treats right away.</p>
+      <a href="https://wa.me/254111550163" target="_blank" class="btn-white">Order on WhatsApp ✨</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Dessert Duo 🍪</div>
+  <div class="socials">
+    <a href="https://instagram.com/thedessertduo.ke" target="_blank">Instagram</a>
+    <a href="https://tiktok.com/@dessert.duo" target="_blank">TikTok</a>
+    <a href="mailto:thedessertduoke@gmail.com">Email</a>
+  </div>
+  <p>Made with 💕 in Nairobi · Min. 4 cookies · Min. 6 cupcakes</p>
+  <p style="margin-top:0.5rem;">© 2025 Dessert Duo. All rights reserved.</p>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = (e.clientX - 11) + 'px';
+  cursor.style.top  = (e.clientY - 11) + 'px';
+});
+document.querySelectorAll('a,button,.menu-card,.why-card,.topping-pill').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+});
+
+// Tab switching
+function showTab(name, btn) {
+  document.querySelectorAll('.menu-grid').forEach(g => {
+    g.classList.add('hidden');
+    g.style.display = '';
+  });
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  const target = document.getElementById('tab-' + name);
+  if (target) {
+    target.classList.remove('hidden');
+    if (name === 'toppings') target.style.display = 'block';
+  }
+  btn.classList.add('active');
+}
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
