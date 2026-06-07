@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6BW6D8VSVX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-6BW6D8VSVX');
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dessert Duo — Cookies & Cupcakes Nairobi</title>
@@ -459,189 +450,723 @@ footer .socials a:hover{color:var(--gold);}
 .topping-select-wrap.collapsed { display: none; }
 
 
-/* ======= ORDER REVIEW MODAL ======= */
-.review-overlay {
-  position: fixed; inset: 0;
-  background: rgba(61,26,26,.55);
-  backdrop-filter: blur(4px);
-  z-index: 800;
-  opacity: 0; pointer-events: none;
-  transition: opacity .3s;
-}
-.review-overlay.open { opacity: 1; pointer-events: all; }
 
-.review-modal {
-  position: fixed;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -48%) scale(.96);
-  width: min(560px, 95vw);
-  max-height: 90vh;
+
+
+/* ======= INLINE ORDER REVIEW SECTION ======= */
+
+#orderReviewSection.visible {
+  display: block;
+  animation: fadeUp 0.4s ease both;
+}
+
+.review-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.review-page-header h2 {
+  font-family: 'Pacifico', cursive;
+  color: var(--brown);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  margin: 0;
+}
+.review-page-header p {
+  color: var(--muted);
+  font-size: .9rem;
+  font-weight: 600;
+  margin: .2rem 0 0;
+}
+.btn-back-shop {
   background: white;
-  border-radius: 28px;
-  box-shadow: 0 24px 80px rgba(0,0,0,.2);
-  z-index: 801;
-  display: flex; flex-direction: column;
-  opacity: 0; pointer-events: none;
-  transition: transform .3s cubic-bezier(.34,1.56,.64,1), opacity .3s;
+  border: 2px solid var(--pink);
+  color: var(--pink-dark);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: .88rem;
+  padding: .55rem 1.3rem;
+  border-radius: 100px;
+  cursor: none !important;
+  transition: background .2s, color .2s;
+  white-space: nowrap;
+}
+.btn-back-shop:hover {
+  background: var(--pink);
+  color: white;
+}
+
+/* Item groups */
+.review-group {
+  background: white;
+  border-radius: 20px;
+  border: 2px solid var(--pink-light);
+  margin-bottom: 1.25rem;
   overflow: hidden;
 }
-.review-modal.open {
-  opacity: 1; pointer-events: all;
-  transform: translate(-50%, -50%) scale(1);
+.review-group-title {
+  background: var(--pink-light);
+  padding: .65rem 1.25rem;
+  font-size: .75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--pink-dark);
+}
+.review-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .9rem 1.25rem;
+  border-bottom: 1px solid var(--pink-light);
+}
+.review-row:last-child { border-bottom: none; }
+.review-row-name {
+  flex: 1;
+  font-weight: 700;
+  color: var(--brown);
+  font-size: .95rem;
+}
+.review-row-name span {
+  display: block;
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-top: 2px;
 }
 
-.review-header {
-  background: linear-gradient(135deg, var(--pink) 0%, var(--pink-dark) 100%);
-  padding: 1.4rem 1.75rem;
-  display: flex; align-items: center; justify-content: space-between;
+/* Qty stepper */
+.rev-stepper {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  background: var(--pink-light);
+  border-radius: 100px;
+  padding: .2rem .45rem;
+}
+.rev-qty-btn {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: white;
+  border: 1.5px solid var(--pink);
+  color: var(--pink-dark);
+  font-size: 1rem; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  cursor: none !important;
+  transition: background .15s, color .15s;
   flex-shrink: 0;
 }
-.review-header h2 {
+.rev-qty-btn:hover { background: var(--pink); color: white; }
+.rev-qty-num {
+  font-weight: 800;
+  color: var(--brown);
+  min-width: 20px;
+  text-align: center;
+  font-size: .92rem;
+}
+.review-row-price {
   font-family: 'Pacifico', cursive;
-  color: white; font-size: 1.4rem; margin: 0;
+  color: var(--pink-dark);
+  font-size: .95rem;
+  min-width: 64px;
+  text-align: right;
 }
-.review-header p {
-  color: rgba(255,255,255,.8);
-  font-size: .82rem; font-weight: 600; margin: .2rem 0 0;
+.review-row-rm {
+  background: none; border: none;
+  color: #DDA0A0; font-size: .9rem;
+  cursor: none !important;
+  padding: .25rem .4rem;
+  border-radius: 8px;
+  transition: color .2s, background .2s;
 }
-.review-close {
-  background: rgba(255,255,255,.2); border: none;
-  color: white; font-size: 1.2rem;
-  width: 34px; height: 34px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  cursor: none !important; transition: background .2s; flex-shrink: 0;
-}
-.review-close:hover { background: rgba(255,255,255,.35); }
+.review-row-rm:hover { color: var(--pink-dark); background: var(--pink-light); }
 
-.review-body {
-  flex: 1; overflow-y: auto;
-  padding: 1.25rem 1.75rem;
+/* Totals + note */
+.review-totals-box {
+  background: white;
+  border-radius: 20px;
+  border: 2px solid var(--pink-light);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
 }
-
-/* Section labels */
-.review-section-title {
-  font-size: .72rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: .1em; color: var(--muted);
-  margin: 1rem 0 .5rem; padding-bottom: .35rem;
-  border-bottom: 1.5px solid var(--pink-light);
+.review-total-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: .92rem;
+  font-weight: 700;
+  color: var(--brown);
+  padding: .3rem 0;
 }
-.review-section-title:first-child { margin-top: 0; }
-
-/* Each order row */
-.review-item {
-  display: flex; align-items: center; gap: .75rem;
-  padding: .6rem 0;
-  border-bottom: 1px dashed var(--pink-light);
-}
-.review-item:last-child { border-bottom: none; }
-.review-item-name {
-  flex: 1; font-weight: 700; color: var(--brown); font-size: .95rem;
-}
-.review-item-cat {
-  font-size: .72rem; font-weight: 600; color: var(--muted); display: block;
-}
-
-/* inline qty stepper (compact) */
-.review-qty {
-  display: flex; align-items: center; gap: .35rem;
-  background: var(--pink-light); border-radius: 100px;
-  padding: .18rem .4rem;
-}
-.review-qty-btn {
-  width: 24px; height: 24px; border-radius: 50%;
-  background: white; border: 1.5px solid var(--pink);
-  color: var(--pink-dark); font-size: 1rem; font-weight: 900;
-  display: flex; align-items: center; justify-content: center;
-  cursor: none !important; transition: background .15s, color .15s;
-  line-height: 1; flex-shrink: 0;
-}
-.review-qty-btn:hover { background: var(--pink); color: white; }
-.review-qty-num {
-  font-weight: 800; color: var(--brown);
-  min-width: 18px; text-align: center; font-size: .9rem;
-}
-
-.review-item-price {
-  font-family: 'Pacifico', cursive;
-  color: var(--pink-dark); font-size: .95rem;
-  min-width: 58px; text-align: right;
-}
-.review-item-remove {
-  background: none; border: none; color: #DDA0A0;
-  font-size: 1rem; cursor: none !important; padding: .25rem;
-  border-radius: 6px; transition: color .15s, background .15s;
-}
-.review-item-remove:hover { color: var(--pink-dark); background: var(--pink-light); }
-
-/* Totals block */
-.review-totals {
-  background: var(--pink-pale);
-  border-radius: 16px; padding: 1rem 1.25rem;
-  margin-top: 1rem;
-}
-.review-total-row {
-  display: flex; justify-content: space-between;
-  font-size: .9rem; font-weight: 700; color: var(--brown);
-  padding: .25rem 0;
-}
-.review-total-row.grand {
-  font-size: 1.15rem; font-weight: 900;
+.review-total-line.grand {
+  font-size: 1.15rem;
+  font-weight: 900;
   border-top: 2px solid var(--pink-light);
-  margin-top: .5rem; padding-top: .6rem;
+  margin-top: .5rem;
+  padding-top: .75rem;
 }
-.review-total-row.grand span:last-child {
-  font-family: 'Pacifico', cursive; color: var(--pink-dark);
+.review-total-line.grand span:last-child {
+  font-family: 'Pacifico', cursive;
+  color: var(--pink-dark);
 }
 
-/* Note textarea */
-.review-note-label {
-  display: block; font-size: .78rem; font-weight: 800;
-  color: var(--muted); text-transform: uppercase; letter-spacing: .08em;
-  margin: 1rem 0 .4rem;
+.review-note-box {
+  background: white;
+  border-radius: 20px;
+  border: 2px solid var(--pink-light);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
 }
-.review-note {
-  width: 100%; border: 2px solid var(--pink-light);
-  border-radius: 14px; padding: .75rem 1rem;
-  font-family: 'Nunito', sans-serif; font-size: .9rem;
-  color: var(--brown); resize: vertical; min-height: 70px;
-  transition: border-color .2s;
+.review-note-box label {
+  display: block;
+  font-size: .75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+  margin-bottom: .5rem;
+}
+.review-note-box textarea {
+  width: 100%;
+  border: 2px solid var(--pink-light);
+  border-radius: 12px;
+  padding: .7rem 1rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: .9rem;
+  color: var(--brown);
+  resize: vertical;
+  min-height: 72px;
   outline: none;
+  transition: border-color .2s;
 }
-.review-note:focus { border-color: var(--pink); }
-.review-note::placeholder { color: var(--muted); opacity: .7; }
+.review-note-box textarea:focus { border-color: var(--pink); }
+.review-note-box textarea::placeholder { color: var(--muted); opacity: .7; }
 
-/* Footer */
-.review-footer {
-  padding: 1.1rem 1.75rem;
-  border-top: 2px solid var(--pink-light);
-  display: flex; flex-direction: column; gap: .65rem;
-  flex-shrink: 0; background: white;
+/* Action buttons */
+.review-actions {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
 }
-.btn-confirm-order {
-  width: 100%; background: #25D366; color: white;
-  font-family: 'Nunito', sans-serif; font-weight: 900;
-  font-size: 1.05rem; padding: .95rem;
-  border-radius: 100px; border: none; cursor: none !important;
+.btn-send-wa {
+  width: 100%;
+  background: #25D366;
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 1.05rem;
+  padding: 1rem;
+  border-radius: 100px;
+  border: none;
+  cursor: none !important;
   transition: transform .2s, box-shadow .2s, background .2s;
   box-shadow: 0 6px 20px rgba(37,211,102,.4);
-  display: flex; align-items: center; justify-content: center; gap: .5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
 }
-.btn-confirm-order:hover {
-  transform: translateY(-2px); box-shadow: 0 10px 28px rgba(37,211,102,.5);
+.btn-send-wa:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(37,211,102,.5);
   background: #1ebe5a;
 }
-.btn-back-to-cart {
-  width: 100%; background: none;
-  border: 2px solid var(--pink-light); color: var(--muted);
-  font-family: 'Nunito', sans-serif; font-weight: 700;
-  font-size: .9rem; padding: .65rem;
-  border-radius: 100px; cursor: none !important;
+.btn-send-wa svg { width: 22px; height: 22px; }
+.btn-clear-review {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: .85rem;
+  padding: .4rem;
+  cursor: none !important;
+  transition: color .2s;
+}
+.btn-clear-review:hover { color: var(--pink-dark); }
+
+
+
+/* ======= INLINE ORDER REVIEW SECTION ======= */
+#orderReview {
+  display: none;
+  background: var(--pink-pale);
+  padding: 5rem 2rem 6rem;
+}
+#orderReview.active {
+  display: block;
+}
+.or-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.or-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.or-header h2 {
+  font-family: 'Pacifico', cursive;
+  color: var(--brown);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  margin: 0;
+}
+.or-header p {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: .95rem;
+  margin: .3rem 0 0;
+}
+.or-back {
+  background: white;
+  border: 2px solid var(--pink);
+  color: var(--pink-dark);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: .9rem;
+  padding: .6rem 1.4rem;
+  border-radius: 100px;
+  cursor: none !important;
+  transition: background .2s, color .2s;
+  white-space: nowrap;
+}
+.or-back:hover {
+  background: var(--pink);
+  color: white;
+}
+.or-card {
+  background: white;
+  border-radius: 24px;
+  border: 2px solid var(--pink-light);
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+.or-card-title {
+  background: var(--pink-light);
+  padding: .75rem 1.5rem;
+  font-size: .75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--pink-dark);
+}
+.or-row {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--pink-light);
+}
+.or-row:last-child {
+  border-bottom: none;
+}
+.or-row-name {
+  flex: 1;
+  font-weight: 700;
+  color: var(--brown);
+  font-size: .95rem;
+}
+.or-row-sub {
+  display: block;
+  font-size: .75rem;
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+.or-stepper {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  background: var(--pink-light);
+  border-radius: 100px;
+  padding: .2rem .4rem;
+}
+.or-step-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid var(--pink);
+  color: var(--pink-dark);
+  font-size: 1.1rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none !important;
+  transition: background .15s, color .15s;
+  line-height: 1;
+}
+.or-step-btn:hover {
+  background: var(--pink);
+  color: white;
+}
+.or-step-num {
+  font-weight: 800;
+  color: var(--brown);
+  min-width: 22px;
+  text-align: center;
+  font-size: .95rem;
+}
+.or-row-price {
+  font-family: 'Pacifico', cursive;
+  color: var(--pink-dark);
+  font-size: 1rem;
+  min-width: 64px;
+  text-align: right;
+}
+.or-remove {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 1.1rem;
+  cursor: none !important;
+  padding: .3rem;
+  border-radius: 8px;
+  transition: color .15s, background .15s;
+  line-height: 1;
+}
+.or-remove:hover {
+  color: var(--pink-dark);
+  background: var(--pink-light);
+}
+.or-totals {
+  background: white;
+  border-radius: 24px;
+  border: 2px solid var(--pink-light);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.or-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--brown);
+  padding: .3rem 0;
+}
+.or-total-row.grand {
+  font-size: 1.2rem;
+  font-weight: 900;
+  border-top: 2px solid var(--pink-light);
+  margin-top: .6rem;
+  padding-top: .8rem;
+}
+.or-total-row.grand span:last-child {
+  font-family: 'Pacifico', cursive;
+  color: var(--pink-dark);
+  font-size: 1.35rem;
+}
+.or-note-wrap {
+  background: white;
+  border-radius: 24px;
+  border: 2px solid var(--pink-light);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.or-note-label {
+  display: block;
+  font-size: .78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+  margin-bottom: .6rem;
+}
+.or-note-input {
+  width: 100%;
+  border: 2px solid var(--pink-light);
+  border-radius: 14px;
+  padding: .8rem 1rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: .9rem;
+  color: var(--brown);
+  resize: vertical;
+  min-height: 80px;
+  outline: none;
+  transition: border-color .2s;
+}
+.or-note-input:focus {
+  border-color: var(--pink);
+}
+.or-note-input::placeholder {
+  color: var(--muted);
+  opacity: .7;
+}
+.or-actions {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+.or-send-btn {
+  width: 100%;
+  background: #25D366;
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 1.1rem;
+  padding: 1.1rem;
+  border-radius: 100px;
+  border: none;
+  cursor: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  transition: transform .2s, box-shadow .2s, background .2s;
+  box-shadow: 0 6px 24px rgba(37,211,102,.4);
+}
+.or-send-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(37,211,102,.5);
+  background: #1ebe5a;
+}
+.or-clear-btn {
+  width: 100%;
+  background: none;
+  border: 2px solid var(--pink-light);
+  color: var(--muted);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: .9rem;
+  padding: .7rem;
+  border-radius: 100px;
+  cursor: none !important;
   transition: border-color .2s, color .2s;
 }
-.btn-back-to-cart:hover { border-color: var(--pink); color: var(--pink-dark); }
-.review-min-note {
-  text-align: center; font-size: .72rem;
-  color: var(--muted); font-weight: 600; line-height: 1.5;
+.or-clear-btn:hover {
+  border-color: var(--pink);
+  color: var(--pink-dark);
+}
+.or-min-note {
+  text-align: center;
+  font-size: .75rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+
+/* ======= STATS SECTION ======= */
+.stats-section {
+  background: linear-gradient(135deg, var(--pink-dark) 0%, #9B2560 100%);
+  padding: 4rem 2rem;
+  text-align: center;
+}
+.stats-inner { max-width: 900px; margin: 0 auto; }
+.stats-section .section-tag { background: rgba(255,255,255,.2); color: white; }
+.stats-section .section-title { color: white; margin-bottom: 2.5rem; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+.stat-card {
+  background: rgba(255,255,255,.12);
+  border: 1.5px solid rgba(255,255,255,.2);
+  border-radius: 24px;
+  padding: 2rem 1.5rem;
+  backdrop-filter: blur(8px);
+  transition: transform .3s, background .3s;
+}
+.stat-card:hover { transform: translateY(-4px); background: rgba(255,255,255,.18); }
+.stat-number {
+  font-family: 'Pacifico', cursive;
+  font-size: 3rem;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: .4rem;
+}
+.stat-label {
+  font-size: .9rem;
+  font-weight: 700;
+  color: rgba(255,255,255,.85);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.stat-icon { font-size: 1.8rem; margin-bottom: .75rem; }
+/* Admin panel */
+.stats-edit-btn {
+  margin-top: 2rem;
+  background: rgba(255,255,255,.15);
+  border: 1.5px solid rgba(255,255,255,.3);
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700; font-size: .82rem;
+  padding: .5rem 1.2rem;
+  border-radius: 100px;
+  cursor: none !important;
+  transition: background .2s;
+}
+.stats-edit-btn:hover { background: rgba(255,255,255,.25); }
+.stats-admin-panel {
+  display: none;
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  text-align: left;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.stats-admin-panel.open { display: block; }
+.stats-admin-panel h3 {
+  font-family: 'Pacifico', cursive;
+  color: var(--brown); font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+.stats-field {
+  display: flex; align-items: center;
+  gap: .75rem; margin-bottom: .75rem;
+}
+.stats-field label {
+  font-size: .82rem; font-weight: 800; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .07em;
+  min-width: 130px;
+}
+.stats-field input {
+  flex: 1; border: 2px solid var(--pink-light);
+  border-radius: 10px; padding: .5rem .75rem;
+  font-family: 'Nunito', sans-serif; font-size: .95rem;
+  color: var(--brown); outline: none;
+  transition: border-color .2s;
+}
+.stats-field input:focus { border-color: var(--pink); }
+.stats-save-btn {
+  width: 100%; background: var(--pink); color: white;
+  font-family: 'Nunito', sans-serif; font-weight: 800;
+  font-size: .95rem; padding: .75rem;
+  border-radius: 100px; border: none;
+  cursor: none !important; transition: background .2s;
+  margin-top: .5rem;
+}
+.stats-save-btn:hover { background: var(--pink-dark); }
+.stats-pw-wrap {
+  display: flex; gap: .5rem; margin-bottom: 1rem;
+}
+.stats-pw-wrap input {
+  flex: 1; border: 2px solid var(--pink-light);
+  border-radius: 10px; padding: .5rem .75rem;
+  font-family: 'Nunito', sans-serif; font-size: .9rem;
+  color: var(--brown); outline: none;
+}
+.stats-pw-wrap button {
+  background: var(--pink); color: white;
+  border: none; border-radius: 10px;
+  padding: .5rem 1rem; font-family: 'Nunito', sans-serif;
+  font-weight: 700; font-size: .85rem;
+  cursor: none !important;
+}
+.stats-pw-err {
+  color: #E53E3E; font-size: .8rem;
+  font-weight: 700; margin-bottom: .75rem;
+  display: none;
+}
+
+/* ======= REVIEWS SECTION ======= */
+.reviews-section { padding: 6rem 2rem; background: var(--cream); }
+.reviews-inner { max-width: 1100px; margin: 0 auto; }
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+.review-card {
+  background: white;
+  border: 2px solid var(--pink-light);
+  border-radius: 22px;
+  padding: 1.5rem;
+  transition: transform .3s, box-shadow .3s;
+  position: relative;
+}
+.review-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(244,114,182,.15); }
+.review-stars { color: var(--gold); font-size: 1.1rem; margin-bottom: .6rem; letter-spacing: 2px; }
+.review-text {
+  font-size: .92rem; color: var(--text);
+  font-weight: 600; line-height: 1.65;
+  margin-bottom: .9rem;
+  font-style: italic;
+}
+.review-text::before { content: '"'; color: var(--pink); font-size: 1.2rem; font-style: normal; }
+.review-text::after  { content: '"'; color: var(--pink); font-size: 1.2rem; font-style: normal; }
+.review-author {
+  font-size: .8rem; font-weight: 800;
+  color: var(--pink-dark); text-transform: uppercase;
+  letter-spacing: .07em;
+}
+.review-date { font-size: .72rem; color: var(--muted); font-weight: 600; margin-top: 2px; }
+.review-badge {
+  position: absolute; top: 1rem; right: 1rem;
+  background: var(--pink-light); color: var(--pink-dark);
+  font-size: .68rem; font-weight: 800; padding: .2rem .6rem;
+  border-radius: 100px; text-transform: uppercase;
+}
+/* Leave a review form */
+.review-form-wrap {
+  background: white;
+  border: 2px solid var(--pink-light);
+  border-radius: 24px;
+  padding: 2rem;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.review-form-wrap h3 {
+  font-family: 'Pacifico', cursive;
+  color: var(--brown); font-size: 1.3rem;
+  margin-bottom: 1.25rem;
+}
+.rf-row { margin-bottom: 1rem; }
+.rf-label {
+  display: block; font-size: .78rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .08em;
+  color: var(--muted); margin-bottom: .4rem;
+}
+.rf-input, .rf-textarea {
+  width: 100%;
+  border: 2px solid var(--pink-light);
+  border-radius: 12px;
+  padding: .7rem 1rem;
+  font-family: 'Nunito', sans-serif; font-size: .92rem;
+  color: var(--brown); outline: none;
+  transition: border-color .2s;
+}
+.rf-input:focus, .rf-textarea:focus { border-color: var(--pink); }
+.rf-textarea { min-height: 90px; resize: vertical; }
+.rf-stars { display: flex; gap: .3rem; margin-bottom: .25rem; }
+.rf-star {
+  font-size: 1.6rem; cursor: none !important;
+  color: #ddd; transition: color .15s;
+  line-height: 1;
+}
+.rf-star.selected, .rf-star:hover { color: var(--gold); }
+.rf-submit {
+  width: 100%; background: var(--pink); color: white;
+  font-family: 'Nunito', sans-serif; font-weight: 800;
+  font-size: 1rem; padding: .9rem;
+  border-radius: 100px; border: none;
+  cursor: none !important;
+  box-shadow: 0 6px 20px rgba(244,114,182,.4);
+  transition: transform .2s, background .2s;
+  margin-top: .5rem;
+}
+.rf-submit:hover { transform: translateY(-2px); background: var(--pink-dark); }
+.rf-success {
+  display: none; text-align: center;
+  padding: 1.5rem;
+  font-size: 1rem; font-weight: 700; color: var(--brown);
+}
+.rf-success div { font-size: 2.5rem; margin-bottom: .75rem; }
+.reviews-empty {
+  text-align: center; padding: 2rem;
+  color: var(--muted); font-weight: 600; font-size: .95rem;
+  grid-column: 1/-1;
 }
 
 </style>
@@ -721,9 +1246,9 @@ footer .socials a:hover{color:var(--gold);}
   <ul class="nav-links">
     <li><a href="#menu">Menu</a></li>
     <li><a href="#order">How to Order</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#reviews">Reviews</a></li><li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="https://wa.me/254111550163" target="_blank" class="nav-order">Order Now ✨</a>
+  <a href="#menu" class="nav-order">Order Now ✨</a>
 </nav>
 
 <!-- HERO -->
@@ -1413,7 +1938,39 @@ footer .socials a:hover{color:var(--gold);}
   </div>
 </section>
 
+
+<!-- ======= INLINE ORDER REVIEW ======= -->
+<section id="orderReview">
+  <div class="or-wrap">
+    <div class="or-header">
+      <div>
+        <h2>Your Order</h2>
+        <p>Review and edit before sending to WhatsApp</p>
+      </div>
+      <button class="or-back" onclick="closeReview()">&#8592; Keep Shopping</button>
+    </div>
+    <div id="orItems"></div>
+    <div class="or-totals" id="orTotals"></div>
+    <div class="or-note-wrap">
+      <label class="or-note-label" for="orNote">Special instructions (optional)</label>
+      <textarea class="or-note-input" id="orNote" placeholder="e.g. No nuts, extra sprinkles, deliver after 5pm..."></textarea>
+    </div>
+    <div class="or-actions">
+      <button class="or-send-btn" onclick="confirmOrder()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M13.507.001C6.045.001.001 6.045.001 13.507c0 7.462 6.044 13.506 13.506 13.506 7.462 0 13.506-6.044 13.506-13.506C27.013 6.045 20.969.001 13.507.001zm0 24.512c-6.071 0-11.006-4.935-11.006-11.006 0-6.071 4.935-11.006 11.006-11.006 6.071 0 11.006 4.935 11.006 11.006 0 6.071-4.935 11.006-11.006 11.006z"/>
+        </svg>
+        Place Order on WhatsApp
+      </button>
+      <button class="or-clear-btn" onclick="clearCart(); closeReview();">Clear order</button>
+      <p class="or-min-note">Min. 4 cookies &middot; Min. 6 cupcakes per order</p>
+    </div>
+  </div>
+</section>
+
 <!-- HOW TO ORDER -->
+
 <section id="order" class="order-section reveal">
   <div class="order-inner">
     <span class="section-tag">Ordering is Easy</span>
@@ -1437,13 +1994,119 @@ footer .socials a:hover{color:var(--gold);}
       <div class="step">
         <div class="step-number">4</div>
         <h3>Enjoy!</h3>
-        <p>Collect or get it delivered. Open the box, take a photo, and dig in because you deserve it.</p>
+        <p>Collect or get it delivered. Open the box, take a photo, and dig in — you deserve it.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- CONTACT -->
+
+<!-- ======= STATS ======= -->
+<section class="stats-section reveal" id="stats">
+  <div class="stats-inner">
+    <span class="section-tag">By the numbers</span>
+    <h2 class="section-title">Loved by the Masses</h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🛒</div>
+        <div class="stat-number" id="statOrders">0</div>
+        <div class="stat-label">Orders Fulfilled</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🍪</div>
+        <div class="stat-number" id="statCookies">0</div>
+        <div class="stat-label">Cookies Sold</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🧁</div>
+        <div class="stat-number" id="statCupcakes">0</div>
+        <div class="stat-label">Cupcakes Sold</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⭐</div>
+        <div class="stat-number" id="statRating">5.0</div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+    </div>
+    <button class="stats-edit-btn" onclick="toggleStatsAdmin()">&#9998; Update stats</button>
+    <div class="stats-admin-panel" id="statsAdminPanel">
+      <h3>Update Stats</h3>
+      <div id="statsPwScreen">
+        <p style="font-size:.85rem;color:var(--muted);font-weight:600;margin-bottom:.75rem;">Enter admin password to edit</p>
+        <div class="stats-pw-wrap">
+          <input type="password" id="statsPwInput" placeholder="Password">
+          <button onclick="checkStatsPassword()">Enter</button>
+        </div>
+        <p class="stats-pw-err" id="statsPwErr">Incorrect password</p>
+      </div>
+      <div id="statsEditFields" style="display:none">
+        <div class="stats-field">
+          <label>Orders</label>
+          <input type="number" id="editOrders" min="0" placeholder="0">
+        </div>
+        <div class="stats-field">
+          <label>Cookies Sold</label>
+          <input type="number" id="editCookies" min="0" placeholder="0">
+        </div>
+        <div class="stats-field">
+          <label>Cupcakes Sold</label>
+          <input type="number" id="editCupcakes" min="0" placeholder="0">
+        </div>
+        <button class="stats-save-btn" onclick="saveStats()">Save &amp; Update</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= REVIEWS ======= -->
+<section class="reviews-section reveal" id="reviews">
+  <div class="reviews-inner">
+    <div style="text-align:center;margin-bottom:3rem;">
+      <span class="section-tag">Happy Customers</span>
+      <h2 class="section-title">What people are saying</h2>
+      <p class="section-desc" style="margin:0 auto;">Real reviews from real Dessert Duo fans across Nairobi.</p>
+    </div>
+    <div class="reviews-grid" id="reviewsGrid">
+      <div class="reviews-empty" id="reviewsEmpty" style="display:none;">
+        No reviews yet — be the first to leave one!
+      </div>
+    </div>
+    <div class="review-form-wrap">
+      <h3>Leave a review 💕</h3>
+      <div id="reviewFormBody">
+        <div class="rf-row">
+          <span class="rf-label">Your rating</span>
+          <div class="rf-stars" id="rfStars">
+            <span class="rf-star" data-val="1">&#9733;</span>
+            <span class="rf-star" data-val="2">&#9733;</span>
+            <span class="rf-star" data-val="3">&#9733;</span>
+            <span class="rf-star" data-val="4">&#9733;</span>
+            <span class="rf-star" data-val="5">&#9733;</span>
+          </div>
+        </div>
+        <div class="rf-row">
+          <label class="rf-label" for="rfName">Your name</label>
+          <input class="rf-input" id="rfName" type="text" placeholder="e.g. Amina W.">
+        </div>
+        <div class="rf-row">
+          <label class="rf-label" for="rfWhat">What did you order?</label>
+          <input class="rf-input" id="rfWhat" type="text" placeholder="e.g. Red velvet cookies, biscoff cupcakes">
+        </div>
+        <div class="rf-row">
+          <label class="rf-label" for="rfMsg">Your review</label>
+          <textarea class="rf-textarea" id="rfMsg" placeholder="Tell us what you loved..."></textarea>
+        </div>
+        <button class="rf-submit" onclick="submitReview()">Submit Review</button>
+      </div>
+      <div class="rf-success" id="rfSuccess">
+        <div>🎉</div>
+        <p>Thank you for your review!<br>It means the world to us.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="contact" class="contact-section reveal">
   <div class="contact-inner">
     <span class="section-tag">Find Us</span>
@@ -1458,7 +2121,7 @@ footer .socials a:hover{color:var(--gold);}
             <path d="M34 29.5c-.5-.25-3-1.5-3.5-1.7-.5-.2-.85-.25-1.2.25-.35.5-1.35 1.7-1.65 2.05-.3.35-.6.4-1.1.15-.5-.25-2.1-.77-4-2.45-1.48-1.31-2.48-2.93-2.77-3.43-.29-.5-.03-.77.22-1.02.22-.22.5-.57.74-.86.25-.28.33-.48.5-.8.17-.32.08-.6-.04-.85-.12-.25-1.2-2.9-1.65-3.97-.43-1.04-.87-.9-1.2-.92-.31-.01-.67-.02-1.02-.02-.36 0-.94.13-1.43.65-.5.52-1.9 1.86-1.9 4.53s1.95 5.26 2.22 5.62c.27.36 3.83 5.85 9.28 8.2 1.3.56 2.31.9 3.1 1.14 1.3.42 2.49.36 3.43.22 1.05-.16 3.22-1.32 3.68-2.59.45-1.28.45-2.37.32-2.6-.14-.22-.48-.34-1-.59z" fill="white"/>
           </svg>
         </div>
-        <span class="contact-label">Call/WhatsApp</span>
+        <span class="contact-label">WhatsApp</span>
         <span class="contact-value">+254 111 550163</span>
       </a>
       <a href="https://wa.me/254795215868" target="_blank" class="contact-card">
@@ -1468,7 +2131,7 @@ footer .socials a:hover{color:var(--gold);}
             <path d="M34 29.5c-.5-.25-3-1.5-3.5-1.7-.5-.2-.85-.25-1.2.25-.35.5-1.35 1.7-1.65 2.05-.3.35-.6.4-1.1.15-.5-.25-2.1-.77-4-2.45-1.48-1.31-2.48-2.93-2.77-3.43-.29-.5-.03-.77.22-1.02.22-.22.5-.57.74-.86.25-.28.33-.48.5-.8.17-.32.08-.6-.04-.85-.12-.25-1.2-2.9-1.65-3.97-.43-1.04-.87-.9-1.2-.92-.31-.01-.67-.02-1.02-.02-.36 0-.94.13-1.43.65-.5.52-1.9 1.86-1.9 4.53s1.95 5.26 2.22 5.62c.27.36 3.83 5.85 9.28 8.2 1.3.56 2.31.9 3.1 1.14 1.3.42 2.49.36 3.43.22 1.05-.16 3.22-1.32 3.68-2.59.45-1.28.45-2.37.32-2.6-.14-.22-.48-.34-1-.59z" fill="white"/>
           </svg>
         </div>
-        <span class="contact-label">Call</span>
+        <span class="contact-label">WhatsApp</span>
         <span class="contact-value">+254 795 215868</span>
       </a>
       <a href="https://instagram.com/thedessertduo.ke" target="_blank" class="contact-card">
@@ -1531,9 +2194,8 @@ footer .socials a:hover{color:var(--gold);}
     <a href="https://tiktok.com/@dessert.duo" target="_blank">TikTok</a>
     <a href="mailto:thedessertduoke@gmail.com">Email</a>
   </div>
-  <p>Made with love in Nairobi ·</p>
+  <p>Made with love in Nairobi · Min. 4 cookies · Min. 6 cupcakes</p>
   <p style="margin-top:.5rem;">© 2025 Dessert Duo. All rights reserved.</p>
-  <p style="margin-top:.5rem;">Website made at Evolence.</p>
 </footer>
 
 <script>
@@ -1723,26 +2385,199 @@ function renderCart() {
 }
 
 /* openReview - opens the review modal */
-function openReview() {
-  var keys = Object.keys(cart);
-  if (keys.length === 0) return;
 
-  renderReview();
 
-  var overlay = document.getElementById('reviewOverlay');
-  var modal   = document.getElementById('reviewModal');
-  if (overlay) overlay.classList.add('open');
-  if (modal)   modal.classList.add('open');
+
+
+
+
+
+
+
+
+
+
+/* confirmOrder - sends to WhatsApp */
+
+
+
+
+
+/* ======= STATS ======= */
+var ADMIN_PASSWORD = 'dessertduo2025';
+
+function loadStats() {
+  var defaults = { orders: 0, cookies: 0, cupcakes: 0 };
+  try {
+    var saved = localStorage.getItem('dd_stats');
+    return saved ? JSON.parse(saved) : defaults;
+  } catch(e) { return defaults; }
 }
 
-function closeReview() {
-  var overlay = document.getElementById('reviewOverlay');
-  var modal   = document.getElementById('reviewModal');
-  if (overlay) overlay.classList.remove('open');
-  if (modal)   modal.classList.remove('open');
+function saveStats() {
+  var orders   = parseInt(document.getElementById('editOrders').value, 10)   || 0;
+  var cookies  = parseInt(document.getElementById('editCookies').value, 10)  || 0;
+  var cupcakes = parseInt(document.getElementById('editCupcakes').value, 10) || 0;
+  var data = { orders: orders, cookies: cookies, cupcakes: cupcakes };
+  try { localStorage.setItem('dd_stats', JSON.stringify(data)); } catch(e) {}
+  renderStats();
+  document.getElementById('statsAdminPanel').classList.remove('open');
+  document.getElementById('statsEditFields').style.display = 'none';
+  document.getElementById('statsPwScreen').style.display = 'block';
+  document.getElementById('statsPwInput').value = '';
 }
 
-function reviewChangeQty(id, delta) {
+function renderStats() {
+  var s = loadStats();
+  animateCount('statOrders',   s.orders);
+  animateCount('statCookies',  s.cookies);
+  animateCount('statCupcakes', s.cupcakes);
+  renderAvgRating();
+}
+
+function animateCount(id, target) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var start   = 0;
+  var dur     = 1200;
+  var step    = 16;
+  var steps   = dur / step;
+  var inc     = target / steps;
+  var current = 0;
+  var timer   = setInterval(function() {
+    current += inc;
+    if (current >= target) {
+      el.textContent = target.toLocaleString();
+      clearInterval(timer);
+    } else {
+      el.textContent = Math.floor(current).toLocaleString();
+    }
+  }, step);
+}
+
+function toggleStatsAdmin() {
+  var panel = document.getElementById('statsAdminPanel');
+  panel.classList.toggle('open');
+  if (panel.classList.contains('open')) {
+    var s = loadStats();
+    document.getElementById('editOrders').value   = s.orders;
+    document.getElementById('editCookies').value  = s.cookies;
+    document.getElementById('editCupcakes').value = s.cupcakes;
+  }
+}
+
+function checkStatsPassword() {
+  var pw = document.getElementById('statsPwInput').value;
+  if (pw === ADMIN_PASSWORD) {
+    document.getElementById('statsPwScreen').style.display  = 'none';
+    document.getElementById('statsEditFields').style.display = 'block';
+    document.getElementById('statsPwErr').style.display     = 'none';
+  } else {
+    document.getElementById('statsPwErr').style.display = 'block';
+    document.getElementById('statsPwInput').value = '';
+  }
+}
+
+/* ======= REVIEWS ======= */
+var selectedStars = 0;
+
+function loadReviews() {
+  try {
+    var saved = localStorage.getItem('dd_reviews');
+    return saved ? JSON.parse(saved) : [];
+  } catch(e) { return []; }
+}
+
+function saveReview(review) {
+  var reviews = loadReviews();
+  reviews.unshift(review);
+  try { localStorage.setItem('dd_reviews', JSON.stringify(reviews)); } catch(e) {}
+}
+
+function renderAvgRating() {
+  var reviews = loadReviews();
+  var el = document.getElementById('statRating');
+  if (!el) return;
+  if (reviews.length === 0) { el.textContent = '5.0'; return; }
+  var sum = reviews.reduce(function(s, r) { return s + (r.stars || 5); }, 0);
+  el.textContent = (sum / reviews.length).toFixed(1);
+}
+
+function renderReviews() {
+  var grid  = document.getElementById('reviewsGrid');
+  var empty = document.getElementById('reviewsEmpty');
+  if (!grid) return;
+  var reviews = loadReviews();
+  grid.querySelectorAll('.review-card').forEach(function(c) { c.remove(); });
+  if (reviews.length === 0) {
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  reviews.forEach(function(r) {
+    var card = document.createElement('div');
+    card.className = 'review-card';
+    var stars = '';
+    for (var i = 0; i < (r.stars || 5); i++) stars += '&#9733;';
+    var d = new Date(r.date);
+    var dateStr = months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    card.innerHTML =
+      '<div class="review-stars">' + stars + '</div>' +
+      '<div class="review-text">' + escHtml(r.msg) + '</div>' +
+      '<div class="review-author">' + escHtml(r.name) + '</div>' +
+      (r.what ? '<div class="review-date">' + escHtml(r.what) + ' &middot; ' + dateStr + '</div>' : '<div class="review-date">' + dateStr + '</div>');
+    if (r.stars === 5) {
+      var badge = document.createElement('span');
+      badge.className   = 'review-badge';
+      badge.textContent = '5 stars';
+      card.appendChild(badge);
+    }
+    grid.insertBefore(card, grid.firstChild);
+  });
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g,  '&amp;')
+    .replace(/</g,  '&lt;')
+    .replace(/>/g,  '&gt;')
+    .replace(/"/g,  '&quot;');
+}
+
+function submitReview() {
+  var name = document.getElementById('rfName').value.trim();
+  var msg  = document.getElementById('rfMsg').value.trim();
+  var what = document.getElementById('rfWhat').value.trim();
+  if (!name || !msg) {
+    alert('Please enter your name and review.');
+    return;
+  }
+  if (selectedStars === 0) {
+    alert('Please select a star rating.');
+    return;
+  }
+  saveReview({ name: name, msg: msg, what: what, stars: selectedStars, date: Date.now() });
+  renderReviews();
+  renderAvgRating();
+  document.getElementById('reviewFormBody').style.display = 'none';
+  document.getElementById('rfSuccess').style.display = 'block';
+}
+
+/* ======= INLINE ORDER REVIEW ======= */
+
+
+
+
+
+function clearCartAndClose() {
+  cart = {};
+  updateBadge();
+  renderCart();
+  closeReview();
+}
+
+function revChangeQty(id, delta) {
   if (!cart[id]) return;
   cart[id].qty += delta;
   if (cart[id].qty <= 0) delete cart[id];
@@ -1755,7 +2590,7 @@ function reviewChangeQty(id, delta) {
   }
 }
 
-function reviewRemoveItem(id) {
+function revRemove(id) {
   delete cart[id];
   updateBadge();
   renderCart();
@@ -1766,127 +2601,8 @@ function reviewRemoveItem(id) {
   }
 }
 
-function renderReview() {
-  var body = document.getElementById('reviewBody');
-  if (!body) return;
-  body.innerHTML = '';
 
-  var keys     = Object.keys(cart);
-  var cookies  = keys.filter(function(k) { return cart[k].cat === 'Cookie'; });
-  var cupcakes = keys.filter(function(k) { return cart[k].cat === 'Cupcake'; });
-  var toppings = keys.filter(function(k) { return cart[k].cat === 'Topping'; });
-  var subtotal = 0;
 
-  function makeSection(title, ids) {
-    if (ids.length === 0) return;
-    var t = document.createElement('div');
-    t.className   = 'review-section-title';
-    t.textContent = title;
-    body.appendChild(t);
-    ids.forEach(function(id) { body.appendChild(makeReviewRow(id)); });
-  }
-
-  makeSection('Cookies', cookies);
-  makeSection('Cupcakes', cupcakes);
-  makeSection('Toppings', toppings);
-
-  /* Totals */
-  keys.forEach(function(id) { subtotal += cart[id].price * cart[id].qty; });
-
-  var totalsDiv = document.createElement('div');
-  totalsDiv.className = 'review-totals';
-
-  var row1 = document.createElement('div');
-  row1.className   = 'review-total-row';
-  var totalQty = keys.reduce(function(s,k){ return s + cart[k].qty; }, 0);
-  row1.innerHTML = '<span>Subtotal (' + totalQty + ' items)</span><span>sh ' + subtotal + '</span>';
-
-  var row2 = document.createElement('div');
-  row2.className = 'review-total-row grand';
-  row2.innerHTML = '<span>Total</span><span>sh ' + subtotal + '</span>';
-
-  totalsDiv.appendChild(row1);
-  totalsDiv.appendChild(row2);
-  body.appendChild(totalsDiv);
-
-  /* Special note field */
-  var noteLabel = document.createElement('label');
-  noteLabel.className   = 'review-note-label';
-  noteLabel.textContent = 'Special instructions (optional)';
-  noteLabel.setAttribute('for', 'reviewNote');
-
-  var noteArea = document.createElement('textarea');
-  noteArea.className   = 'review-note';
-  noteArea.id          = 'reviewNote';
-  noteArea.placeholder = 'e.g. No nuts, extra sprinkles on the red velvet, deliver after 5pm...';
-
-  body.appendChild(noteLabel);
-  body.appendChild(noteArea);
-}
-
-function makeReviewRow(id) {
-  var item      = cart[id];
-  var lineTotal = item.price * item.qty;
-
-  var row = document.createElement('div');
-  row.className = 'review-item';
-
-  /* Name */
-  var nameDiv = document.createElement('div');
-  nameDiv.className = 'review-item-name';
-  nameDiv.textContent = item.name;
-  var catSpan = document.createElement('span');
-  catSpan.className   = 'review-item-cat';
-  catSpan.textContent = 'sh ' + item.price + ' each';
-  nameDiv.appendChild(catSpan);
-
-  /* Qty stepper (only for non-toppings) */
-  var stepperDiv = document.createElement('div');
-  if (item.cat !== 'Topping') {
-    stepperDiv.className = 'review-qty';
-
-    var mBtn = document.createElement('button');
-    mBtn.className = 'review-qty-btn';
-    mBtn.textContent = '-';
-    mBtn.setAttribute('data-action', 'rev-minus');
-    mBtn.setAttribute('data-id', id);
-
-    var qNum = document.createElement('span');
-    qNum.className   = 'review-qty-num';
-    qNum.textContent = item.qty;
-
-    var pBtn = document.createElement('button');
-    pBtn.className = 'review-qty-btn';
-    pBtn.textContent = '+';
-    pBtn.setAttribute('data-action', 'rev-plus');
-    pBtn.setAttribute('data-id', id);
-
-    stepperDiv.appendChild(mBtn);
-    stepperDiv.appendChild(qNum);
-    stepperDiv.appendChild(pBtn);
-  }
-
-  /* Price */
-  var priceDiv = document.createElement('div');
-  priceDiv.className   = 'review-item-price';
-  priceDiv.textContent = 'sh ' + lineTotal;
-
-  /* Remove */
-  var rmBtn = document.createElement('button');
-  rmBtn.className = 'review-item-remove';
-  rmBtn.textContent = 'x';
-  rmBtn.setAttribute('data-action', 'rev-remove');
-  rmBtn.setAttribute('data-id', id);
-  rmBtn.title = 'Remove';
-
-  row.appendChild(nameDiv);
-  row.appendChild(stepperDiv);
-  row.appendChild(priceDiv);
-  row.appendChild(rmBtn);
-  return row;
-}
-
-/* confirmOrder - sends to WhatsApp */
 function confirmOrder() {
   var keys = Object.keys(cart);
   if (keys.length === 0) return;
@@ -1916,14 +2632,10 @@ function confirmOrder() {
   if (note) {
     msg += NL + NL + encodeURIComponent('Special instructions: ' + note);
   }
-
   msg += NL + NL + encodeURIComponent('Please confirm and let me know delivery details. Thank you!');
 
   window.open('https://wa.me/254111550163?text=' + msg, '_blank');
 }
-
-/* placeOrder kept as alias for any lingering references */
-function placeOrder() { openReview(); }
 
 /* Toggle topping panel - must be global for onclick */
 function toggleToppingPanel(btn) {
@@ -1978,19 +2690,57 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  /* Review modal delegation */
-  var reviewBody = document.getElementById('reviewBody');
-  if (reviewBody) {
-    document.getElementById('reviewModal').addEventListener('click', function(e) {
-      var btn = e.target.closest('[data-action]');
-      if (!btn) return;
-      var action = btn.getAttribute('data-action');
-      var id     = btn.getAttribute('data-id');
-      if (action === 'rev-plus')   reviewChangeQty(id,  1);
-      if (action === 'rev-minus')  reviewChangeQty(id, -1);
-      if (action === 'rev-remove') reviewRemoveItem(id);
+  /* Review modal delegation */  /* Review section delegation */
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('[data-rev-action]');
+    if (!btn) return;
+    var action = btn.getAttribute('data-rev-action');
+    var id     = btn.getAttribute('data-rev-id');
+    if (action === 'plus')   revChangeQty(id,  1);
+    if (action === 'minus')  revChangeQty(id, -1);
+    if (action === 'remove') revRemove(id);
+  });
+
+  /* Stars interaction */
+  var rfStars = document.getElementById('rfStars');
+  if (rfStars) {
+    rfStars.addEventListener('click', function(e) {
+      var star = e.target.closest('.rf-star');
+      if (!star) return;
+      selectedStars = parseInt(star.getAttribute('data-val'), 10);
+      document.querySelectorAll('.rf-star').forEach(function(s) {
+        s.classList.toggle('selected', parseInt(s.getAttribute('data-val'), 10) <= selectedStars);
+      });
+    });
+    rfStars.addEventListener('mouseover', function(e) {
+      var star = e.target.closest('.rf-star');
+      if (!star) return;
+      var val = parseInt(star.getAttribute('data-val'), 10);
+      document.querySelectorAll('.rf-star').forEach(function(s) {
+        s.classList.toggle('selected', parseInt(s.getAttribute('data-val'), 10) <= val);
+      });
+    });
+    rfStars.addEventListener('mouseleave', function() {
+      document.querySelectorAll('.rf-star').forEach(function(s) {
+        s.classList.toggle('selected', parseInt(s.getAttribute('data-val'), 10) <= selectedStars);
+      });
     });
   }
+
+  /* Init stats and reviews */
+  renderStats();
+  renderReviews();
+
+  /* Order review inline actions */
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('[data-oraction]');
+    if (!btn) return;
+    var action = btn.getAttribute('data-oraction');
+    var id     = btn.getAttribute('data-orid');
+    if (action === 'plus')   orChangeQty(id,  1);
+    if (action === 'minus')  orChangeQty(id, -1);
+    if (action === 'remove') orRemove(id);
+  });
 
   /* Topping checkbox changes */
   document.addEventListener('change', function(e) {
@@ -2036,37 +2786,13 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="cart-footer" id="cartFooter" style="display:none">
     <div class="cart-summary" id="cartSummary"></div>
     <button class="btn-place-order" onclick="openReview()">
-      Review &amp; Place Order
+      Review &amp; Place Order &#8594;
     </button>
     <button class="btn-clear-cart" onclick="clearCart()">Clear cart</button>
     <p class="cart-min-note">Min. 4 cookies per order · Min. 6 cupcakes per order</p>
   </div>
 </div>
 
-
-<!-- ======= ORDER REVIEW MODAL ======= -->
-<div class="review-overlay" id="reviewOverlay" onclick="closeReview()"></div>
-<div class="review-modal" id="reviewModal">
-  <div class="review-header">
-    <div>
-      <h2>Review Your Order</h2>
-      <p>Check everything looks right before sending to WhatsApp</p>
-    </div>
-    <button class="review-close" onclick="closeReview()">&#10005;</button>
-  </div>
-  <div class="review-body" id="reviewBody">
-    <!-- filled by JS -->
-  </div>
-  <div class="review-footer">
-    <button class="btn-confirm-order" onclick="confirmOrder()">
-      Send Order on WhatsApp
-    </button>
-    <button class="btn-back-to-cart" onclick="closeReview()">
-      &#8592; Back to cart
-    </button>
-    <p class="review-min-note">Min. 4 cookies per order &middot; Min. 6 cupcakes per order</p>
-  </div>
-</div>
 
 </body>
 </html>
