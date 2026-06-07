@@ -1557,7 +1557,7 @@ function addCursorListeners() {
   });
 }
 
-/* Tab switching - must be global for onclick */
+/* Tab switching global for onclick */
 function showTab(name, btn) {
   document.querySelectorAll('.menu-grid').forEach(function(g) { g.classList.add('hidden'); });
   document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
@@ -1569,7 +1569,7 @@ function showTab(name, btn) {
 /* Cart state */
 var cart = {};
 
-/* Toggle cart drawer - must be global for onclick */
+/* Toggle cart drawer global for onclick */
 function toggleCart() {
   var drawer  = document.getElementById('cartDrawer');
   var overlay = document.getElementById('cartOverlay');
