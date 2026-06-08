@@ -2006,7 +2006,7 @@ footer .socials a:hover{color:var(--gold);}
 <section class="stats-section reveal" id="stats">
   <div class="stats-inner">
     <span class="section-tag">By the numbers</span>
-    <h2 class="section-title">Loved by the Masses</h2>
+    <h2 class="section-title">Loved by Nairobi</h2>
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-icon">🛒</div>
@@ -2219,7 +2219,7 @@ function addCursorListeners() {
   });
 }
 
-/* Tab switching global for onclick */
+/* Tab switching - must be global for onclick */
 function showTab(name, btn) {
   document.querySelectorAll('.menu-grid').forEach(function(g) { g.classList.add('hidden'); });
   document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
@@ -2231,7 +2231,7 @@ function showTab(name, btn) {
 /* Cart state */
 var cart = {};
 
-/* Toggle cart drawer global for onclick */
+/* Toggle cart drawer - must be global for onclick */
 function toggleCart() {
   var drawer  = document.getElementById('cartDrawer');
   var overlay = document.getElementById('cartOverlay');
@@ -2368,7 +2368,7 @@ function renderCart() {
     div.appendChild(priceDiv);
     div.appendChild(removeBtn);
 
-    body.insertBefore(div, footer);
+    body.appendChild(div);
   });
 
   summary.innerHTML = '';
